@@ -1,0 +1,156 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Product Launch</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script src="https://www.gstatic.com/firebasejs/9.6.1/firebase-app-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/9.6.1/firebase-firestore-compat.js"></script>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" />
+</head>
+<body class="bg-gray-100 font-sans">
+  <!-- Hero Section -->
+  <section class="text-center py-20 bg-white shadow-md">
+    <h1 class="text-5xl font-bold text-gray-800">Introducing Our New Product</h1>
+    <p class="text-lg mt-4 text-gray-600">Experience the future of innovation</p>
+    <div id="countdown" class="text-3xl mt-6 text-red-500 font-semibold"></div>
+  </section>
+
+  <!-- Highlights Section -->
+  <section class="py-16 px-6 md:px-20 bg-gray-50">
+    <h2 class="text-3xl font-bold text-center mb-10">Product Highlights</h2>
+    <div class="grid grid-cols-1 md:grid-cols-3 gap-8 text-center">
+      <div class="p-6 bg-white rounded-xl shadow">
+        <i class="fas fa-bolt text-4xl text-blue-600 mb-4"></i>
+        <h3 class="text-xl font-semibold">Fast & Reliable</h3>
+        <p class="text-gray-600">Built for speed and reliability, it never slows you down.</p>
+      </div>
+      <div class="p-6 bg-white rounded-xl shadow">
+        <i class="fas fa-shield-alt text-4xl text-green-600 mb-4"></i>
+        <h3 class="text-xl font-semibold">Secure & Private</h3>
+        <p class="text-gray-600">We value your privacy and keep your data safe.</p>
+      </div>
+      <div class="p-6 bg-white rounded-xl shadow">
+        <i class="fas fa-magic text-4xl text-purple-600 mb-4"></i>
+        <h3 class="text-xl font-semibold">AI Powered</h3>
+        <p class="text-gray-600">Smart features that learn and adapt to your needs.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- Testimonials -->
+  <section class="py-16 px-6 md:px-20 bg-white">
+    <h2 class="text-3xl font-bold text-center mb-10">What People Are Saying</h2>
+    <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+      <div class="bg-gray-100 p-6 rounded-xl shadow">
+        <p class="text-gray-700 italic">"This product changed my workflow entirely!"</p>
+        <h4 class="mt-4 font-semibold text-gray-800">— Sarah, Designer</h4>
+      </div>
+      <div class="bg-gray-100 p-6 rounded-xl shadow">
+        <p class="text-gray-700 italic">"Incredible AI insights. A game changer for students like me."</p>
+        <h4 class="mt-4 font-semibold text-gray-800">— Ahmed, Student</h4>
+      </div>
+      <div class="bg-gray-100 p-6 rounded-xl shadow">
+        <p class="text-gray-700 italic">"The segmentation and autoresponse blew me away!"</p>
+        <h4 class="mt-4 font-semibold text-gray-800">— Maria, Partner</h4>
+      </div>
+    </div>
+  </section>
+
+  <!-- AI Popup Container -->
+  <div id="popup-container"></div>
+
+  <!-- Countdown Timer -->
+  <script>
+    const countdown = document.getElementById('countdown');
+    const launchDate = new Date("2025-05-15T00:00:00").getTime();
+    const x = setInterval(() => {
+      const now = new Date().getTime();
+      const distance = launchDate - now;
+      const days = Math.floor(distance / (1000 * 60 * 60 * 24));
+      const hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+      const minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
+      const seconds = Math.floor((distance % (1000 * 60)) / 1000);
+      countdown.innerHTML = `${days}d ${hours}h ${minutes}m ${seconds}s`;
+      if (distance < 0) {
+        clearInterval(x);
+        countdown.innerHTML = "Launched!";
+      }
+    }, 1000);
+  </script>
+
+  <!-- AI Popup Script -->
+  <script>
+    const firebaseConfig = {
+      apiKey: "AIzaSyAaR_mClWsGBHdH8RnEWrVIVRl2R6TvVRw",
+      authDomain: "sir-sha.firebaseapp.com",
+      projectId: "sir-sha",
+      storageBucket: "sir-sha.firebasestorage.app",
+      messagingSenderId: "225726778591",
+      appId: "1:225726778591:web:e377a641477a5971c3ed6a",
+      measurementId: "G-J9FKYX7GCF"
+    };
+    firebase.initializeApp(firebaseConfig);
+    const db = firebase.firestore();
+
+    let popupShown = false;
+
+    function triggerPopup() {
+      if (popupShown) return;
+      popupShown = true;    
+
+      document.getElementById("popup-container").innerHTML = `
+        <div class="fixed inset-0 bg-black bg-opacity-50 flex justify-center items-center z-50">
+          <div class="bg-white p-8 rounded-lg shadow-xl w-full max-w-md relative">
+            <button class="absolute top-2 right-2 text-gray-500 hover:text-gray-800" onclick="closePopup()">×</button>
+            <h2 class="text-xl font-bold mb-4">Join the Launch!</h2>
+            <input type="email" id="email" placeholder="Your Email" class="w-full mb-3 p-2 border rounded" />
+            <textarea id="reason" placeholder="Why are you signing up?" class="w-full p-2 border rounded mb-3"></textarea>
+            <button onclick="submitEmail()" class="bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 rounded">Subscribe</button>
+          </div>
+        </div>
+      `;
+    }
+
+    function closePopup() {
+      document.getElementById("popup-container").innerHTML = "";
+    }
+
+    window.addEventListener("scroll", () => {
+      if (window.scrollY > 400) triggerPopup();
+    });
+
+    setTimeout(() => triggerPopup(), 10000);
+
+    function categorize(reason) {
+      reason = reason.toLowerCase().trim();
+      console.log(`Categorizing reason: "${reason}"`);  // Debugging line
+
+      // Using regular expressions to match whole words and avoid false positives
+      if (/\bstudent\b/.test(reason)) return "student";
+      if (/\bteacher\b/.test(reason) || /\bteach\b/.test(reason)) return "teacher";
+      if (/\bpartner\b/.test(reason) || /\bcollab\b/.test(reason)) return "partner";
+      
+      return "general";
+    }
+
+    async function submitEmail() {
+      const email = document.getElementById("email").value;
+      const reason = document.getElementById("reason").value;
+      const segment = categorize(reason);
+
+      if (!email) return alert("Email is required");
+
+      try {
+        await db.collection("subscribers").add({ email, reason, segment, timestamp: new Date() });
+        closePopup();
+        alert(`Thanks for subscribing! We've categorized you as a "${segment}".`);
+      } catch (error) {
+        console.error("Error adding subscriber:", error);
+        alert("There was an error with your subscription. Please try again.");
+      }
+    }
+  </script>
+</body>
+</html>
