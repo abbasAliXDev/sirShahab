@@ -1,0 +1,138 @@
+{% extends "layout.html" %}
+
+{% block content %}
+<div class="row">
+    <div class="col-md-12">
+        <div class="card">
+            <div class="card-header bg-primary text-white">
+                <h1 class="mb-0"><i class="fas fa-info-circle me-2"></i>About DiabetesPredict</h1>
+            </div>
+            <div class="card-body">
+                <div class="row">
+                    <div class="col-lg-8">
+                        <h2>Our Mission</h2>
+                        <p class="lead">
+                            DiabetesPredict aims to use artificial intelligence to help identify individuals at risk of diabetes
+                            and provide them with actionable insights to prevent or manage the condition.
+                        </p>
+                        
+                        <h3 class="mt-4">The Problem We're Addressing</h3>
+                        <p>
+                            Diabetes is a global health crisis affecting over 460 million people worldwide. Early detection
+                            and intervention can significantly reduce complications and improve quality of life. However, many
+                            cases go undiagnosed until serious symptoms appear.
+                        </p>
+                        <p>
+                            Our AI-powered tool aims to bridge this gap by providing an accessible preliminary risk assessment
+                            that can motivate at-risk individuals to seek proper medical evaluation and make lifestyle changes.
+                        </p>
+                        
+                        <h3 class="mt-4">Our AI Approach</h3>
+                        <p>
+                            DiabetesPredict uses machine learning, specifically a Random Forest classifier, to analyze health metrics
+                            and predict diabetes risk. The model is trained on the Pima Indians Diabetes Dataset, which contains
+                            health measurements from individuals along with their diabetes status.
+                        </p>
+                        <p>
+                            Key aspects of our approach include:
+                        </p>
+                        <ul>
+                            <li>Data preprocessing to handle missing values and normalize features</li>
+                            <li>Feature importance analysis to identify the most significant risk factors</li>
+                            <li>Probability calibration to provide meaningful risk percentages</li>
+                            <li>Regular model evaluation and retraining to maintain accuracy</li>
+                        </ul>
+                    </div>
+                    <div class="col-lg-4">
+                        <div class="card bg-light mb-4">
+                            <div class="card-body">
+                                <h4><i class="fas fa-chart-line text-primary me-2"></i>Key Features</h4>
+                                <ul class="list-group list-group-flush">
+                                    <li class="list-group-item bg-transparent">Diabetes risk prediction</li>
+                                    <li class="list-group-item bg-transparent">Feature importance analysis</li>
+                                    <li class="list-group-item bg-transparent">Personalized health insights</li>
+                                    <li class="list-group-item bg-transparent">Educational resources</li>
+                                    <li class="list-group-item bg-transparent">API access for integration</li>
+                                </ul>
+                            </div>
+                        </div>
+                        
+                        <div class="card bg-light">
+                            <div class="card-body">
+                                <h4><i class="fas fa-exclamation-circle text-warning me-2"></i>Limitations</h4>
+                                <ul class="list-group list-group-flush">
+                                    <li class="list-group-item bg-transparent">Not a diagnostic tool</li>
+                                    <li class="list-group-item bg-transparent">Based on a specific population dataset</li>
+                                    <li class="list-group-item bg-transparent">May not account for all risk factors</li>
+                                    <li class="list-group-item bg-transparent">No substitute for medical advice</li>
+                                    <li class="list-group-item bg-transparent">Requires accurate self-reported data</li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <hr class="my-4">
+                
+                <div class="row">
+                    <div class="col-md-6">
+                        <h3><i class="fas fa-database me-2"></i>About the Dataset</h3>
+                        <p>
+                            The Pima Indians Diabetes Dataset originates from the National Institute of Diabetes and Digestive and 
+                            Kidney Diseases. It includes health measurements from females of Pima Indian heritage, at least 21 years old,
+                            with information about whether they developed diabetes within five years of these measurements.
+                        </p>
+                        <p>
+                            The dataset includes features such as:
+                        </p>
+                        <ul>
+                            <li>Number of pregnancies</li>
+                            <li>Plasma glucose concentration</li>
+                            <li>Diastolic blood pressure</li>
+                            <li>Triceps skin fold thickness</li>
+                            <li>2-Hour serum insulin</li>
+                            <li>Body mass index (BMI)</li>
+                            <li>Diabetes pedigree function (genetic influence)</li>
+                            <li>Age</li>
+                        </ul>
+                    </div>
+                    <div class="col-md-6">
+                        <h3><i class="fas fa-brain me-2"></i>Technical Implementation</h3>
+                        <p>
+                            Our application uses Flask for the web framework, with scikit-learn powering the machine learning
+                            components. The front-end is built with HTML, CSS, and JavaScript, using Bootstrap for responsive design
+                            and Chart.js for data visualization.
+                        </p>
+                        <h4 class="mt-3">Machine Learning Pipeline:</h4>
+                        <ol>
+                            <li>Data cleaning and preprocessing</li>
+                            <li>Feature scaling to normalize ranges</li>
+                            <li>Model training using Random Forest classifier</li>
+                            <li>Hyperparameter optimization via cross-validation</li>
+                            <li>Model evaluation on test data</li>
+                            <li>Feature importance extraction</li>
+                        </ol>
+                        <p>
+                            The model achieves approximately 78% accuracy on the test dataset, with good sensitivity and specificity
+                            balance for diabetes prediction.
+                        </p>
+                    </div>
+                </div>
+                
+                <hr class="my-4">
+                
+                <div class="text-center mt-4">
+                    <h3>Disclaimer</h3>
+                    <p class="lead">
+                        DiabetesPredict is an educational tool and should not be used as a substitute for professional medical advice,
+                        diagnosis, or treatment. Always consult a qualified healthcare provider with questions about your health.
+                    </p>
+                    <a href="/" class="btn btn-primary btn-lg mt-3">
+                        <i class="fas fa-home me-2"></i>Return to Home
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

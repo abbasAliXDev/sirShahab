@@ -1,0 +1,486 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>DiabetesPredict - AI Startup Pitch Deck</title>
+    <link href="https://cdn.replit.com/agent/bootstrap-agent-dark-theme.min.css" rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', sans-serif;
+            background-color: #fff;
+            color: #333;
+            line-height: 1.6;
+            margin: 0;
+            padding: 0;
+        }
+        
+        .slide {
+            page-break-after: always;
+            height: 100vh;
+            padding: 2rem;
+            display: flex;
+            flex-direction: column;
+            position: relative;
+        }
+        
+        .slide-content {
+            max-width: 1000px;
+            margin: 0 auto;
+            flex: 1;
+        }
+        
+        .slide-number {
+            position: absolute;
+            bottom: 20px;
+            right: 20px;
+            font-size: 14px;
+            color: #666;
+        }
+        
+        .logo {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            margin-bottom: 30px;
+        }
+        
+        .logo-text {
+            font-size: 24px;
+            font-weight: bold;
+            color: #3485e4;
+        }
+        
+        h1 {
+            font-size: 36px;
+            margin-bottom: 20px;
+            color: #3485e4;
+            text-align: center;
+        }
+        
+        h2 {
+            font-size: 24px;
+            margin-bottom: 30px;
+            color: #666;
+            text-align: center;
+        }
+        
+        .content-row {
+            display: flex;
+            gap: 20px;
+            margin-bottom: 20px;
+        }
+        
+        .content-col {
+            flex: 1;
+        }
+        
+        .box {
+            border: 2px solid;
+            border-radius: 10px;
+            padding: 20px;
+            height: 100%;
+        }
+        
+        .problem-box {
+            border-color: #f43f5e;
+        }
+        
+        .solution-box {
+            border-color: #10b981;
+        }
+        
+        .ai-box {
+            border-color: #3485e4;
+        }
+        
+        .process-box {
+            border-color: #6366f1;
+        }
+        
+        .market-box {
+            border-color: #3485e4;
+        }
+        
+        .business-box {
+            border-color: #f59e0b;
+        }
+        
+        .box-header {
+            font-size: 20px;
+            font-weight: bold;
+            margin-bottom: 15px;
+            display: flex;
+            align-items: center;
+        }
+        
+        .problem-box .box-header {
+            color: #f43f5e;
+        }
+        
+        .solution-box .box-header {
+            color: #10b981;
+        }
+        
+        .ai-box .box-header {
+            color: #3485e4;
+        }
+        
+        .process-box .box-header {
+            color: #6366f1;
+        }
+        
+        .market-box .box-header {
+            color: #3485e4;
+        }
+        
+        .business-box .box-header {
+            color: #f59e0b;
+        }
+        
+        ul {
+            padding-left: 20px;
+            margin-top: 10px;
+        }
+        
+        li {
+            margin-bottom: 10px;
+        }
+        
+        .stats {
+            display: flex;
+            justify-content: space-around;
+            margin-bottom: 20px;
+        }
+        
+        .stat {
+            text-align: center;
+            padding: 15px;
+            border: 1px solid #3485e4;
+            border-radius: 10px;
+            width: 22%;
+        }
+        
+        .stat-number {
+            font-size: 24px;
+            font-weight: bold;
+            color: #3485e4;
+            margin-bottom: 5px;
+        }
+        
+        .stat-label {
+            font-size: 14px;
+            color: #666;
+        }
+        
+        .revenue-streams {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 15px;
+            margin-bottom: 20px;
+        }
+        
+        .stream {
+            flex: 1;
+            min-width: 45%;
+            border: 1px solid #f59e0b;
+            border-radius: 8px;
+            padding: 12px;
+        }
+        
+        .stream-title {
+            font-weight: bold;
+            color: #f59e0b;
+            margin-bottom: 8px;
+        }
+        
+        .scaling-strategies {
+            display: flex;
+            gap: 15px;
+        }
+        
+        .strategy {
+            flex: 1;
+            text-align: center;
+            padding: 10px;
+            border: 1px solid #10b981;
+            border-radius: 8px;
+        }
+        
+        .strategy-title {
+            font-weight: bold;
+            color: #10b981;
+            margin-bottom: 8px;
+        }
+        
+        .process-steps {
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+        }
+        
+        .step {
+            display: flex;
+            align-items: flex-start;
+            margin-bottom: 10px;
+        }
+        
+        .step-number {
+            background-color: #6366f1;
+            color: white;
+            width: 25px;
+            height: 25px;
+            border-radius: 50%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            margin-right: 10px;
+            font-weight: bold;
+            flex-shrink: 0;
+        }
+    </style>
+</head>
+<body>
+    <!-- Slide 1: Problem & Audience -->
+    <div class="slide">
+        <div class="slide-content">
+            <div class="logo">
+                <div class="logo-text">DiabetesPredict</div>
+            </div>
+            
+            <h1>The Problem & Our Audience</h1>
+            <h2>Early Detection Can Change Lives</h2>
+            
+            <div class="content-row">
+                <div class="content-col">
+                    <div class="box problem-box">
+                        <div class="box-header">
+                            The Problem
+                        </div>
+                        <ul>
+                            <li><strong>537 million</strong> adults worldwide have diabetes, with <strong>1 in 2</strong> remaining undiagnosed</li>
+                            <li>Type 2 diabetes is often <strong>asymptomatic</strong> in early stages when intervention is most effective</li>
+                            <li>Traditional screening is <strong>reactive</strong>, occurring after symptoms appear</li>
+                            <li>Generic health advice fails to address <strong>individual risk factors</strong></li>
+                            <li>Healthcare inequity leads to <strong>delayed diagnosis</strong> for millions</li>
+                        </ul>
+                    </div>
+                </div>
+                
+                <div class="content-col">
+                    <div class="box solution-box">
+                        <div class="box-header">
+                            Our Audience
+                        </div>
+                        <ul>
+                            <li><strong>At-risk individuals</strong> with family history or lifestyle risk factors</li>
+                            <li><strong>Healthcare providers</strong> seeking efficient screening tools</li>
+                            <li><strong>Insurance companies</strong> focused on preventive health initiatives</li>
+                            <li><strong>Wellness programs</strong> at corporations and community centers</li>
+                            <li><strong>Underserved communities</strong> with limited access to specialized healthcare</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <div class="slide-number">1/3</div>
+    </div>
+    
+    <!-- Slide 2: AI Solution & How It Works -->
+    <div class="slide">
+        <div class="slide-content">
+            <div class="logo">
+                <div class="logo-text">DiabetesPredict</div>
+            </div>
+            
+            <h1>Our AI Solution</h1>
+            <h2>Intelligent Risk Assessment & Personalized Recommendations</h2>
+            
+            <div class="content-row">
+                <div class="content-col" style="width: 60%;">
+                    <div class="box ai-box">
+                        <div class="box-header">
+                            The AI Technology
+                        </div>
+                        <ul>
+                            <li><strong>Machine Learning Risk Model</strong> - Random Forest classifier trained on diabetes dataset achieving 73.4% accuracy</li>
+                            <li><strong>Feature Importance Analysis</strong> - Identifies key risk factors unique to each individual</li>
+                            <li><strong>Personalized Recommendations</strong> - Advanced language model generates tailored health insights</li>
+                            <li><strong>No Special Equipment</strong> - Uses standard health metrics available from routine checkups</li>
+                            <li><strong>Continuous Learning</strong> - Model improves as more users contribute data</li>
+                        </ul>
+                        
+                        <div style="margin-top: 15px; display: flex; flex-wrap: wrap; gap: 8px;">
+                            <span style="background-color: #eee; padding: 4px 10px; border-radius: 15px; font-size: 12px;">Machine Learning</span>
+                            <span style="background-color: #eee; padding: 4px 10px; border-radius: 15px; font-size: 12px;">Predictive Analytics</span>
+                            <span style="background-color: #eee; padding: 4px 10px; border-radius: 15px; font-size: 12px;">NLP</span>
+                            <span style="background-color: #eee; padding: 4px 10px; border-radius: 15px; font-size: 12px;">Data Visualization</span>
+                            <span style="background-color: #eee; padding: 4px 10px; border-radius: 15px; font-size: 12px;">Health Metrics DB</span>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="content-col" style="width: 40%;">
+                    <div class="box process-box" style="height: calc(100% - 8px);">
+                        <div class="box-header">
+                            How It Works
+                        </div>
+                        <div class="process-steps">
+                            <div class="step">
+                                <div class="step-number">1</div>
+                                <div>
+                                    <strong>Data Collection</strong>
+                                    <p style="margin-top: 5px; font-size: 14px;">User inputs eight key health metrics through our web interface.</p>
+                                </div>
+                            </div>
+                            
+                            <div class="step">
+                                <div class="step-number">2</div>
+                                <div>
+                                    <strong>AI Risk Assessment</strong>
+                                    <p style="margin-top: 5px; font-size: 14px;">Our ML algorithm analyzes input against our trained model to generate a personalized risk score.</p>
+                                </div>
+                            </div>
+                            
+                            <div class="step">
+                                <div class="step-number">3</div>
+                                <div>
+                                    <strong>Recommendation Generation</strong>
+                                    <p style="margin-top: 5px; font-size: 14px;">Large language model creates personalized health recommendations based on individual risk factors.</p>
+                                </div>
+                            </div>
+                            
+                            <div class="step">
+                                <div class="step-number">4</div>
+                                <div>
+                                    <strong>Progress Tracking</strong>
+                                    <p style="margin-top: 5px; font-size: 14px;">Monitoring changes in health metrics over time to visualize progress and adjust recommendations.</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <div class="slide-number">2/3</div>
+    </div>
+    
+    <!-- Slide 3: Business Model & Scaling Strategy -->
+    <div class="slide">
+        <div class="slide-content">
+            <div class="logo">
+                <div class="logo-text">DiabetesPredict</div>
+            </div>
+            
+            <h1>Business Model & Scaling Strategy</h1>
+            <h2>Sustainable Growth in Digital Health</h2>
+            
+            <div class="stats">
+                <div class="stat">
+                    <div class="stat-number">$48.6B</div>
+                    <div class="stat-label">Global Digital Health Market (2024)</div>
+                </div>
+                <div class="stat">
+                    <div class="stat-number">18.4%</div>
+                    <div class="stat-label">Annual Market Growth Rate</div>
+                </div>
+                <div class="stat">
+                    <div class="stat-number">537M</div>
+                    <div class="stat-label">Adults with Diabetes Worldwide</div>
+                </div>
+                <div class="stat">
+                    <div class="stat-number">$1.4T</div>
+                    <div class="stat-label">Annual Healthcare Costs of Diabetes</div>
+                </div>
+            </div>
+            
+            <div class="content-row">
+                <div class="content-col">
+                    <div class="box business-box">
+                        <div class="box-header">
+                            Revenue Streams
+                        </div>
+                        <div class="revenue-streams">
+                            <div class="stream">
+                                <div class="stream-title">
+                                    Freemium Consumer Model
+                                </div>
+                                <div style="font-size: 14px;">
+                                    Free basic risk assessment with premium subscription ($9.99/month) for advanced features, personalized coaching, and continuous monitoring.
+                                </div>
+                            </div>
+                            
+                            <div class="stream">
+                                <div class="stream-title">
+                                    Enterprise Licensing
+                                </div>
+                                <div style="font-size: 14px;">
+                                    Annual licensing fees for healthcare providers, clinics, and insurance companies, with tiered pricing based on user volume.
+                                </div>
+                            </div>
+                            
+                            <div class="stream">
+                                <div class="stream-title">
+                                    API Integration
+                                </div>
+                                <div style="font-size: 14px;">
+                                    API access for third-party health apps and platforms at $0.10 per prediction with volume discounts for high-usage partners.
+                                </div>
+                            </div>
+                            
+                            <div class="stream">
+                                <div class="stream-title">
+                                    Analytics Services
+                                </div>
+                                <div style="font-size: 14px;">
+                                    Anonymized population health insights and trend reports for healthcare organizations and research institutions.
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <div style="margin-top: 20px;">
+                <div class="box" style="border-color: #10b981; padding-bottom: 10px;">
+                    <div class="box-header" style="color: #10b981;">
+                        Scaling Strategy
+                    </div>
+                    <div class="scaling-strategies">
+                        <div class="strategy">
+                            <div class="strategy-title">
+                                Healthcare Partnerships
+                            </div>
+                            <div style="font-size: 14px;">
+                                Integration with healthcare systems and insurance providers for wider adoption and data access
+                            </div>
+                        </div>
+                        
+                        <div class="strategy">
+                            <div class="strategy-title">
+                                Global Expansion
+                            </div>
+                            <div style="font-size: 14px;">
+                                Localized versions for key international markets with region-specific health guidelines
+                            </div>
+                        </div>
+                        
+                        <div class="strategy">
+                            <div class="strategy-title">
+                                Mobile Platform
+                            </div>
+                            <div style="font-size: 14px;">
+                                Native apps with wearable device integration for continuous health monitoring
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <div class="slide-number">3/3</div>
+    </div>
+</body>
+</html>

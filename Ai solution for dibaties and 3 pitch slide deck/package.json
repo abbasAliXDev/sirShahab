@@ -1,0 +1,15 @@
+{
+  "name": "workspace",
+  "version": "1.0.0",
+  "description": "![DiabetesPredict](https://img.shields.io/badge/DiabetesPredict-v1.0-blue) ![Flask](https://img.shields.io/badge/Flask-2.0+-green) ![Machine Learning](https://img.shields.io/badge/ML-scikit--learn-orange) ![Python](https://img.shields.io/badge/Python-3.8+-yellow)",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "puppeteer": "^24.7.1"
+  }
+}

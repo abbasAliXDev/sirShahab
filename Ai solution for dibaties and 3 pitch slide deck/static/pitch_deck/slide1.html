@@ -1,0 +1,184 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>DiabetesPredict - Slide 1</title>
+    <link href="https://cdn.replit.com/agent/bootstrap-agent-dark-theme.min.css" rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', sans-serif;
+            background-color: #0e1525;
+            color: #e5e5e5;
+            line-height: 1.6;
+            padding: 0;
+            margin: 0;
+        }
+        
+        .slide {
+            width: 1200px;
+            height: 675px;
+            padding: 50px;
+            box-sizing: border-box;
+            position: relative;
+            background: linear-gradient(135deg, #0e1525 0%, #1c2333 100%);
+        }
+        
+        .logo {
+            position: absolute;
+            top: 30px;
+            left: 50px;
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+        
+        .logo-icon {
+            color: #3485e4;
+            font-size: 2.5rem;
+        }
+        
+        .logo-text {
+            font-size: 2.5rem;
+            font-weight: bold;
+            background: linear-gradient(90deg, #3485e4, #5a67d8);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+        
+        .slide-number {
+            position: absolute;
+            bottom: 30px;
+            right: 50px;
+            font-size: 1.5rem;
+            color: #a0aec0;
+        }
+        
+        .headline {
+            font-size: 3.2rem;
+            font-weight: bold;
+            margin-top: 60px;
+            margin-bottom: 30px;
+            text-align: center;
+            color: #ffffff;
+        }
+        
+        .subheadline {
+            font-size: 1.8rem;
+            color: #3485e4;
+            text-align: center;
+            margin-bottom: 50px;
+        }
+        
+        .content {
+            display: flex;
+            justify-content: space-between;
+            align-items: stretch;
+            margin-top: 30px;
+        }
+        
+        .box {
+            flex: 1;
+            padding: 30px;
+            border-radius: 15px;
+            margin: 0 15px;
+        }
+        
+        .problem-box {
+            background-color: rgba(244, 63, 94, 0.1);
+            border: 2px solid #f43f5e;
+        }
+        
+        .audience-box {
+            background-color: rgba(16, 185, 129, 0.1);
+            border: 2px solid #10b981;
+        }
+        
+        .box-header {
+            font-size: 2rem;
+            font-weight: bold;
+            margin-bottom: 20px;
+            display: flex;
+            align-items: center;
+        }
+        
+        .problem-box .box-header {
+            color: #f43f5e;
+        }
+        
+        .audience-box .box-header {
+            color: #10b981;
+        }
+        
+        .icon {
+            margin-right: 15px;
+            font-size: 2rem;
+        }
+        
+        ul {
+            font-size: 1.3rem;
+            padding-left: 20px;
+        }
+        
+        li {
+            margin-bottom: 15px;
+            position: relative;
+        }
+        
+        li:before {
+            content: "•";
+            color: #3485e4;
+            font-weight: bold;
+            display: inline-block;
+            width: 1em;
+            margin-left: -1em;
+        }
+    </style>
+</head>
+<body>
+    <div class="slide">
+        <div class="logo">
+            <i class="fas fa-heartbeat logo-icon"></i>
+            <div class="logo-text">DiabetesPredict</div>
+        </div>
+        
+        <h1 class="headline">The Problem & Our Audience</h1>
+        <h2 class="subheadline">Early Detection Can Change Lives</h2>
+        
+        <div class="content">
+            <div class="box problem-box">
+                <div class="box-header">
+                    <i class="fas fa-exclamation-triangle icon"></i>
+                    The Problem
+                </div>
+                <ul>
+                    <li><strong>537 million</strong> adults worldwide have diabetes, with <strong>1 in 2</strong> remaining undiagnosed</li>
+                    <li>Type 2 diabetes is often <strong>asymptomatic</strong> in early stages when intervention is most effective</li>
+                    <li>Traditional screening is <strong>reactive</strong>, occurring after symptoms appear</li>
+                    <li>Generic health advice fails to address <strong>individual risk factors</strong></li>
+                    <li>Healthcare inequity leads to <strong>delayed diagnosis</strong> for millions</li>
+                </ul>
+            </div>
+            
+            <div class="box audience-box">
+                <div class="box-header">
+                    <i class="fas fa-users icon"></i>
+                    Our Audience
+                </div>
+                <ul>
+                    <li><strong>At-risk individuals</strong> with family history or lifestyle risk factors</li>
+                    <li><strong>Healthcare providers</strong> seeking efficient screening tools</li>
+                    <li><strong>Insurance companies</strong> focused on preventive health initiatives</li>
+                    <li><strong>Wellness programs</strong> at corporations and community centers</li>
+                    <li><strong>Underserved communities</strong> with limited access to specialized healthcare</li>
+                </ul>
+            </div>
+        </div>
+        
+        <div class="slide-number">1/3</div>
+    </div>
+    
+    <!-- Font Awesome -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/js/all.min.js"></script>
+</body>
+</html>

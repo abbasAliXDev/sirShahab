@@ -1,0 +1,599 @@
+{% extends "layout.html" %}
+
+{% block content %}
+<div class="prediction-result mb-4">
+    <!-- Prediction results will be dynamically inserted here -->
+</div>
+<div class="row">
+    <div class="col-md-12 mb-4">
+        <div class="card bg-dark text-light">
+            <div class="card-body text-center py-4">
+                <h1 class="display-4 mb-4">Your Diabetes Risk Assessment</h1>
+                
+                <div class="d-flex justify-content-center mb-4">
+                    <div class="prediction-result {% if prediction == 1 %}prediction-high{% else %}prediction-low{% endif %} p-4 rounded-circle">
+                        <div class="prediction-inner">
+                            <span class="prediction-value">{{ probability }}%</span>
+                            <span class="prediction-label">Risk</span>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="mb-4">
+                    {% if prediction == 1 %}
+                        <h2 class="text-danger">
+                            <i class="fas fa-exclamation-triangle me-2"></i>
+                            Higher Risk of Diabetes
+                        </h2>
+                        <p class="lead">Based on your health data, our model predicts a higher risk of diabetes.</p>
+                    {% else %}
+                        <h2 class="text-success">
+                            <i class="fas fa-check-circle me-2"></i>
+                            Lower Risk of Diabetes
+                        </h2>
+                        <p class="lead">Based on your health data, our model predicts a lower risk of diabetes.</p>
+                    {% endif %}
+                </div>
+                
+                <!-- AI-Generated Health Insight -->
+                {% if health_insight %}
+                <div class="mt-4 mb-4">
+                    <div class="card bg-primary text-white">
+                        <div class="card-body">
+                            <h3 class="mb-3">
+                                <i class="fas fa-lightbulb me-2"></i>
+                                Your Personalized Health Insight
+                            </h3>
+                            <div class="health-insight-content">
+                                {{ health_insight|safe }}
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                {% endif %}
+                
+                <div class="alert {% if prediction == 1 %}alert-warning{% else %}alert-info{% endif %} mx-auto" style="max-width: 800px;">
+                    <i class="fas fa-info-circle me-2"></i>
+                    This assessment is based on machine learning analysis and should not replace professional medical advice.
+                    If you're concerned about diabetes, please consult with a healthcare provider.
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="row">
+    <div class="col-lg-6 mb-4">
+        <div class="card shadow-sm h-100">
+            <div class="card-header bg-primary text-white">
+                <h3 class="mb-0"><i class="fas fa-chart-bar me-2"></i>Risk Factor Analysis</h3>
+            </div>
+            <div class="card-body">
+                <p>This chart shows the relative importance of each factor in the diabetes prediction:</p>
+                <canvas id="featureImportanceChart" width="400" height="300"></canvas>
+                
+                <div class="mt-4">
+                    <h4>Understanding Feature Importance:</h4>
+                    <p>Higher values indicate factors that had a stronger influence on your prediction result.</p>
+                    
+                    <div class="mt-3">
+                        <h5>Top 3 Influential Factors:</h5>
+                        <ul id="topFactors" class="list-group list-group-flush">
+                            <!-- Will be populated by JavaScript -->
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <div class="col-lg-6 mb-4">
+        <div class="card shadow-sm h-100">
+            <div class="card-header bg-primary text-white">
+                <h3 class="mb-0"><i class="fas fa-user-md me-2"></i>Your Health Data</h3>
+            </div>
+            <div class="card-body">
+                <div class="table-responsive">
+                    <table class="table table-hover">
+                        <thead>
+                            <tr>
+                                <th>Health Metric</th>
+                                <th>Your Value</th>
+                                <th>Healthy Range</th>
+                                <th>Status</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>Glucose (mg/dL)</td>
+                                <td>{{ user_data.glucose }}</td>
+                                <td>70-99</td>
+                                <td>
+                                    {% if user_data.glucose > 125 %}
+                                        <span class="badge bg-danger">High</span>
+                                    {% elif user_data.glucose >= 100 %}
+                                        <span class="badge bg-warning">Borderline</span>
+                                    {% else %}
+                                        <span class="badge bg-success">Normal</span>
+                                    {% endif %}
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>Blood Pressure (mm Hg)</td>
+                                <td>{{ user_data.blood_pressure }}</td>
+                                <td>&lt;80</td>
+                                <td>
+                                    {% if user_data.blood_pressure >= 90 %}
+                                        <span class="badge bg-danger">High</span>
+                                    {% elif user_data.blood_pressure >= 80 %}
+                                        <span class="badge bg-warning">Elevated</span>
+                                    {% else %}
+                                        <span class="badge bg-success">Normal</span>
+                                    {% endif %}
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>BMI (kg/m²)</td>
+                                <td>{{ user_data.bmi }}</td>
+                                <td>18.5-24.9</td>
+                                <td>
+                                    {% if user_data.bmi >= 30 %}
+                                        <span class="badge bg-danger">Obese</span>
+                                    {% elif user_data.bmi >= 25 %}
+                                        <span class="badge bg-warning">Overweight</span>
+                                    {% elif user_data.bmi < 18.5 %}
+                                        <span class="badge bg-warning">Underweight</span>
+                                    {% else %}
+                                        <span class="badge bg-success">Normal</span>
+                                    {% endif %}
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>Age (years)</td>
+                                <td>{{ user_data.age }}</td>
+                                <td>N/A</td>
+                                <td>
+                                    {% if user_data.age > 45 %}
+                                        <span class="badge bg-warning">Higher Risk Factor</span>
+                                    {% else %}
+                                        <span class="badge bg-info">Information</span>
+                                    {% endif %}
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>Insulin (mu U/ml)</td>
+                                <td>{{ user_data.insulin }}</td>
+                                <td>&lt;140</td>
+                                <td>
+                                    {% if user_data.insulin > 200 %}
+                                        <span class="badge bg-danger">High</span>
+                                    {% elif user_data.insulin > 140 %}
+                                        <span class="badge bg-warning">Elevated</span>
+                                    {% else %}
+                                        <span class="badge bg-success">Normal</span>
+                                    {% endif %}
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+                
+                <div class="mt-4">
+                    <h4>Recommendations:</h4>
+                    <ul class="list-group list-group-flush">
+                        {% if user_data.glucose > 100 %}
+                            <li class="list-group-item bg-transparent">
+                                <i class="fas fa-cookie-bite text-warning me-2"></i>
+                                Consider reducing sugar and refined carbohydrate intake
+                            </li>
+                        {% endif %}
+                        
+                        {% if user_data.bmi >= 25 %}
+                            <li class="list-group-item bg-transparent">
+                                <i class="fas fa-weight text-warning me-2"></i>
+                                Aim for a healthier weight through diet and exercise
+                            </li>
+                        {% endif %}
+                        
+                        {% if user_data.blood_pressure >= 80 %}
+                            <li class="list-group-item bg-transparent">
+                                <i class="fas fa-heart text-warning me-2"></i>
+                                Monitor your blood pressure and consider reducing sodium intake
+                            </li>
+                        {% endif %}
+                        
+                        <li class="list-group-item bg-transparent">
+                            <i class="fas fa-running text-info me-2"></i>
+                            Regular physical activity (150+ minutes/week) helps prevent diabetes
+                        </li>
+                        
+                        <li class="list-group-item bg-transparent">
+                            <i class="fas fa-apple-alt text-info me-2"></i>
+                            Maintain a balanced diet rich in fruits, vegetables, and whole grains
+                        </li>
+                    </ul>
+                </div>
+            </div>
+            <div class="card-footer">
+                <div class="d-grid gap-2">
+                    <a href="/" class="btn btn-primary">
+                        <i class="fas fa-calculator me-2"></i>New Assessment
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- AI-Generated Personalized Recommendations -->
+{% if recommendations %}
+<div class="row mt-4">
+    <div class="col-md-12 mb-4">
+        <div class="card">
+            <div class="card-header bg-success text-white">
+                <h3 class="mb-0"><i class="fas fa-robot me-2"></i>AI-Powered Personalized Recommendations</h3>
+            </div>
+            <div class="card-body">
+                <p class="lead mb-4">Based on your health data and risk assessment, our AI has generated the following personalized recommendations:</p>
+                
+                <div class="accordion" id="recommendationsAccordion">
+                    {% for rec in recommendations %}
+                    <div class="accordion-item mb-3 border 
+                        {% if rec.priority == 'high' %}border-danger{% elif rec.priority == 'medium' %}border-warning{% else %}border-info{% endif %}">
+                        <h2 class="accordion-header" id="heading{{ loop.index }}">
+                            <button class="accordion-button {% if loop.index > 1 %}collapsed{% endif %}" type="button" 
+                                data-bs-toggle="collapse" data-bs-target="#collapse{{ loop.index }}" 
+                                aria-expanded="{% if loop.index == 1 %}true{% else %}false{% endif %}" 
+                                aria-controls="collapse{{ loop.index }}">
+                                
+                                {% if rec.category == 'diet' %}
+                                    <i class="fas fa-utensils me-2 
+                                        {% if rec.priority == 'high' %}text-danger{% elif rec.priority == 'medium' %}text-warning{% else %}text-info{% endif %}"></i>
+                                {% elif rec.category == 'exercise' or rec.category == 'physical' %}
+                                    <i class="fas fa-running me-2 
+                                        {% if rec.priority == 'high' %}text-danger{% elif rec.priority == 'medium' %}text-warning{% else %}text-info{% endif %}"></i>
+                                {% elif rec.category == 'lifestyle' %}
+                                    <i class="fas fa-balance-scale me-2 
+                                        {% if rec.priority == 'high' %}text-danger{% elif rec.priority == 'medium' %}text-warning{% else %}text-info{% endif %}"></i>
+                                {% elif rec.category == 'monitoring' %}
+                                    <i class="fas fa-stethoscope me-2 
+                                        {% if rec.priority == 'high' %}text-danger{% elif rec.priority == 'medium' %}text-warning{% else %}text-info{% endif %}"></i>
+                                {% else %}
+                                    <i class="fas fa-lightbulb me-2 
+                                        {% if rec.priority == 'high' %}text-danger{% elif rec.priority == 'medium' %}text-warning{% else %}text-info{% endif %}"></i>
+                                {% endif %}
+                                
+                                {{ rec.title }}
+                                
+                                {% if rec.priority == 'high' %}
+                                    <span class="ms-2 badge bg-danger">High Priority</span>
+                                {% elif rec.priority == 'medium' %}
+                                    <span class="ms-2 badge bg-warning">Medium Priority</span>
+                                {% else %}
+                                    <span class="ms-2 badge bg-info">Advisory</span>
+                                {% endif %}
+                            </button>
+                        </h2>
+                        <div id="collapse{{ loop.index }}" class="accordion-collapse collapse {% if loop.index == 1 %}show{% endif %}" 
+                            aria-labelledby="heading{{ loop.index }}" data-bs-parent="#recommendationsAccordion">
+                            <div class="accordion-body">
+                                <div class="recommendation-content">
+                                    {{ rec.content|safe }}
+                                </div>
+                                <div class="d-flex justify-content-end mt-3">
+                                    <button class="btn btn-sm btn-outline-primary me-2" onclick="saveRecommendation({{ loop.index }})">
+                                        <i class="fas fa-bookmark me-1"></i>Save
+                                    </button>
+                                    <button class="btn btn-sm btn-outline-secondary" onclick="printRecommendation({{ loop.index }})">
+                                        <i class="fas fa-print me-1"></i>Print
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    {% endfor %}
+                </div>
+                
+                <div class="text-center mt-4">
+                    <p class="small text-muted">These recommendations are generated using AI based on your health metrics and risk assessment. Always consult with a healthcare professional before making significant health or lifestyle changes.</p>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endif %}
+
+<div class="row mt-4">
+    <div class="col-md-12">
+        <div class="card">
+            <div class="card-header bg-info text-white">
+                <h3 class="mb-0"><i class="fas fa-graduation-cap me-2"></i>Understanding Diabetes Risk</h3>
+            </div>
+            <div class="card-body">
+                <div class="row">
+                    <div class="col-md-4 mb-3">
+                        <h4><i class="fas fa-question-circle text-info me-2"></i>What is Diabetes?</h4>
+                        <p>Diabetes is a chronic health condition that affects how your body turns food into energy. With diabetes, your body either doesn't make enough insulin or can't use it as well as it should.</p>
+                    </div>
+                    <div class="col-md-4 mb-3">
+                        <h4><i class="fas fa-exclamation-triangle text-warning me-2"></i>Risk Factors</h4>
+                        <ul>
+                            <li>Overweight or obesity</li>
+                            <li>Family history of diabetes</li>
+                            <li>Physical inactivity</li>
+                            <li>Age (especially over 45)</li>
+                            <li>History of gestational diabetes</li>
+                            <li>High blood pressure or high cholesterol</li>
+                        </ul>
+                    </div>
+                    <div class="col-md-4 mb-3">
+                        <h4><i class="fas fa-shield-alt text-success me-2"></i>Prevention Tips</h4>
+                        <ul>
+                            <li>Maintain a healthy weight</li>
+                            <li>Regular physical activity</li>
+                            <li>Eat a balanced diet</li>
+                            <li>Limit alcohol consumption</li>
+                            <li>Don't smoke</li>
+                            <li>Regular health check-ups</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
+
+{% block scripts %}
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+        // Feature importance data
+        const featureImportance = {{ feature_importance|tojson }};
+        
+        // Get feature names and values
+        const features = Object.keys(featureImportance);
+        const values = Object.values(featureImportance);
+        
+        // Create feature importance chart
+        const ctx = document.getElementById('featureImportanceChart').getContext('2d');
+        const featureChart = new Chart(ctx, {
+            type: 'bar',
+            data: {
+                labels: features,
+                datasets: [{
+                    label: 'Feature Importance',
+                    data: values,
+                    backgroundColor: [
+                        'rgba(75, 192, 192, 0.7)',
+                        'rgba(54, 162, 235, 0.7)',
+                        'rgba(153, 102, 255, 0.7)',
+                        'rgba(255, 159, 64, 0.7)',
+                        'rgba(255, 99, 132, 0.7)',
+                        'rgba(201, 203, 207, 0.7)',
+                        'rgba(255, 205, 86, 0.7)',
+                        'rgba(59, 130, 246, 0.7)'
+                    ],
+                    borderColor: [
+                        'rgba(75, 192, 192, 1)',
+                        'rgba(54, 162, 235, 1)',
+                        'rgba(153, 102, 255, 1)',
+                        'rgba(255, 159, 64, 1)',
+                        'rgba(255, 99, 132, 1)',
+                        'rgba(201, 203, 207, 1)',
+                        'rgba(255, 205, 86, 1)',
+                        'rgba(59, 130, 246, 1)'
+                    ],
+                    borderWidth: 1
+                }]
+            },
+            options: {
+                indexAxis: 'y',
+                scales: {
+                    x: {
+                        beginAtZero: true,
+                        ticks: {
+                            color: 'rgba(255, 255, 255, 0.7)'
+                        },
+                        grid: {
+                            color: 'rgba(255, 255, 255, 0.1)'
+                        }
+                    },
+                    y: {
+                        ticks: {
+                            color: 'rgba(255, 255, 255, 0.7)'
+                        },
+                        grid: {
+                            color: 'rgba(255, 255, 255, 0.1)'
+                        }
+                    }
+                },
+                plugins: {
+                    legend: {
+                        display: false
+                    }
+                }
+            }
+        });
+        
+        // Get top 3 features
+        const topFeatures = Object.entries(featureImportance)
+            .sort((a, b) => b[1] - a[1])
+            .slice(0, 3);
+            
+        const topFactorsList = document.getElementById('topFactors');
+        
+        topFeatures.forEach((feature, index) => {
+            const [name, value] = feature;
+            const listItem = document.createElement('li');
+            listItem.className = 'list-group-item bg-transparent d-flex justify-content-between align-items-center';
+            
+            // Add medal icons for top 3
+            let medal = '';
+            if (index === 0) medal = '<i class="fas fa-medal text-warning me-2"></i>';
+            else if (index === 1) medal = '<i class="fas fa-medal text-secondary me-2"></i>';
+            else if (index === 2) medal = '<i class="fas fa-medal" style="color: #CD7F32; margin-right: 0.5rem;"></i>';
+            
+            listItem.innerHTML = `
+                ${medal}${name}
+                <span class="badge bg-primary rounded-pill">${value.toFixed(3)}</span>
+            `;
+            
+            topFactorsList.appendChild(listItem);
+        });
+    });
+    
+    /**
+     * Save a recommendation to local storage or account (if logged in)
+     * @param {number} index - The index of the recommendation to save
+     */
+    function saveRecommendation(index) {
+        try {
+            // Get recommendation content
+            const recommendationElement = document.querySelector(`#collapse${index} .recommendation-content`);
+            const titleElement = document.querySelector(`#heading${index} button`);
+            
+            if (!recommendationElement || !titleElement) {
+                showToast('Error saving recommendation', 'danger');
+                return;
+            }
+            
+            const title = titleElement.innerText.trim().split('\n')[0];
+            const content = recommendationElement.innerHTML;
+            
+            // Get existing saved recommendations or initialize empty array
+            let savedRecommendations = JSON.parse(localStorage.getItem('savedRecommendations') || '[]');
+            
+            // Add new recommendation
+            savedRecommendations.push({
+                id: Date.now(),
+                title: title,
+                content: content,
+                date: new Date().toISOString()
+            });
+            
+            // Save back to local storage
+            localStorage.setItem('savedRecommendations', JSON.stringify(savedRecommendations));
+            
+            // Show success message
+            showToast('Recommendation saved successfully!', 'success');
+        } catch (error) {
+            console.error('Error saving recommendation:', error);
+            showToast('Error saving recommendation', 'danger');
+        }
+    }
+    
+    /**
+     * Print a specific recommendation
+     * @param {number} index - The index of the recommendation to print
+     */
+    function printRecommendation(index) {
+        try {
+            // Get recommendation content
+            const recommendationElement = document.querySelector(`#collapse${index} .recommendation-content`);
+            const titleElement = document.querySelector(`#heading${index} button`);
+            
+            if (!recommendationElement || !titleElement) {
+                showToast('Error printing recommendation', 'danger');
+                return;
+            }
+            
+            const title = titleElement.innerText.trim().split('\n')[0];
+            const content = recommendationElement.innerHTML;
+            
+            // Create a new window for printing
+            const printWindow = window.open('', '_blank');
+            
+            // Create the print document
+            printWindow.document.write(`
+                <!DOCTYPE html>
+                <html>
+                <head>
+                    <title>DiabetesPredict Recommendation</title>
+                    <meta charset="UTF-8">
+                    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+                    <style>
+                        body { font-family: Arial, sans-serif; line-height: 1.6; max-width: 800px; margin: 0 auto; padding: 20px; }
+                        h1 { color: #0d6efd; border-bottom: 1px solid #ddd; padding-bottom: 10px; }
+                        .header { margin-bottom: 30px; }
+                        .footer { margin-top: 50px; font-size: 0.9em; color: #666; border-top: 1px solid #ddd; padding-top: 20px; }
+                    </style>
+                </head>
+                <body>
+                    <div class="header">
+                        <h1>DiabetesPredict Health Recommendation</h1>
+                        <p><strong>Date:</strong> ${new Date().toLocaleDateString()}</p>
+                    </div>
+                    
+                    <h2>${title}</h2>
+                    
+                    <div class="content">
+                        ${content}
+                    </div>
+                    
+                    <div class="footer">
+                        <p>Generated by DiabetesPredict AI Health Advisor</p>
+                        <p><em>This recommendation is provided for informational purposes only and not intended as medical advice. 
+                        Please consult with a healthcare professional before making any significant health or lifestyle changes.</em></p>
+                    </div>
+                    
+                    <script>
+                        window.onload = function() {
+                            window.print();
+                        }
+                    </script>
+                </body>
+                </html>
+            `);
+            
+            printWindow.document.close();
+        } catch (error) {
+            console.error('Error printing recommendation:', error);
+            showToast('Error printing recommendation', 'danger');
+        }
+    }
+    
+    /**
+     * Display a toast notification
+     * @param {string} message - The message to display
+     * @param {string} type - The type of toast (success, warning, danger, info)
+     */
+    function showToast(message, type = 'info') {
+        // Create toast container if it doesn't exist
+        let toastContainer = document.querySelector('.toast-container');
+        if (!toastContainer) {
+            toastContainer = document.createElement('div');
+            toastContainer.className = 'toast-container position-fixed bottom-0 end-0 p-3';
+            document.body.appendChild(toastContainer);
+        }
+        
+        // Create a unique ID for the toast
+        const toastId = 'toast-' + Date.now();
+        
+        // Create toast HTML
+        const toastHtml = `
+            <div id="${toastId}" class="toast" role="alert" aria-live="assertive" aria-atomic="true">
+                <div class="toast-header bg-${type} text-white">
+                    <strong class="me-auto">DiabetesPredict</strong>
+                    <button type="button" class="btn-close btn-close-white" data-bs-dismiss="toast" aria-label="Close"></button>
+                </div>
+                <div class="toast-body">
+                    ${message}
+                </div>
+            </div>
+        `;
+        
+        // Add toast to container
+        toastContainer.insertAdjacentHTML('beforeend', toastHtml);
+        
+        // Initialize and show the toast
+        const toastElement = document.getElementById(toastId);
+        const toast = new bootstrap.Toast(toastElement, { delay: 3000 });
+        toast.show();
+        
+        // Remove toast element after it's hidden
+        toastElement.addEventListener('hidden.bs.toast', function () {
+            toastElement.remove();
+        });
+    }
+</script>
+{% endblock %}
